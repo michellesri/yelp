@@ -7,7 +7,36 @@
    * picks the first existing entry. If no entry exists, this view will display
    * the CreatingEntryView. */
   EntryView.render = (entryElement, activeEntryData) => {
-    // TODO
+    
+    EntryModel.loadAll((error, entries) => {
+  
+      if (error) {
+        console.log(error);
+      } else {
+        
+        if (activeEntryData == null) {
+          if (entries[0]) {
+            activeEntryData = entries[0];
+          } else {
+            CreatingEntryView.render();
+            return;
+          }
+        }
+        const options = {
+           viewing: true,
+           entries: entries,
+           activeEntryData: activeEntryData
+         }
+         const child = Templates.renderEntry(options)
+         entryElement.appendChild(child);
+
+      }
+      
+    });
+    
+
+    
+    // CreatingEntryView.render(entryElement)
   }
 
   window.EntryView = EntryView
