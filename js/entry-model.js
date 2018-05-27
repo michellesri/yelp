@@ -12,7 +12,24 @@
    *  entries -- an array of entries
    */
   EntryModel.loadAll = callback => {
-    // TODO
+    
+    const request = new XMLHttpRequest()
+    request.addEventListener('load', () => {
+      console.log(request.responseText)
+      if(request.status == STATUS_OK){
+
+        const entries = JSON.parse(request.responseText)
+        
+        callback(null, entries)
+      
+      } else{
+        callback(request.responseText)
+      }
+    })
+
+    request.open('GET', '/entries')
+    request.send()
+
   }
 
   /* Adds the given entry to the list of entries. The entry must *not* have
