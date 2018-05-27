@@ -110,7 +110,29 @@
    *  error -- the error that occurred or NULL if no error occurred
    */
   EntryModel.remove = (id, callback) => {
-    // TODO
+    
+    const request = new XMLHttpRequest()
+        
+    request.addEventListener('load', () => {
+      console.log(request.responseText)
+      if(request.status == STATUS_OK){
+
+        const entries = JSON.parse(request.responseText)
+        
+        callback(null, entries)
+      
+      } else{
+        callback(request.responseText)
+      }
+    })
+    
+    request.open('POST', '/entries/' + id + '/delete')
+
+    
+    request.setRequestHeader('Content-type', 'application/json')
+
+    request.send(JSON.stringify(id))
+    
   }
 
   window.EntryModel = EntryModel
