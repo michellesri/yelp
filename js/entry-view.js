@@ -28,15 +28,24 @@
            activeEntryData: activeEntryData
          }
          const child = Templates.renderEntry(options)
-         entryElement.appendChild(child);
+         entryElement.appendChild(child)
+         
+         const className = child.getElementsByClassName("new");
+         
+         for (let i = 0; i < className.length; i++) {
+           className[i].addEventListener("click", (e) => {
+             e.preventDefault();
+             console.log('blah')
+             CreatingEntryView.render(entryElement);
+           })
+         }
 
       }
       
     });
     
+  
 
-    
-    // CreatingEntryView.render(entryElement)
   }
 
   window.EntryView = EntryView
