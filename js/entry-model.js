@@ -40,7 +40,30 @@
    *  entry -- the entry added, with an id attribute
    */
   EntryModel.add = (entry, callback) => {
-    // TODO
+    const request = new XMLHttpRequest()
+    
+    const params = entry;
+    request.open('POST', '/entries')
+
+    
+    request.addEventListener('load', () => {
+      console.log(request.responseText)
+      if(request.status == STATUS_OK){
+
+        const entries = JSON.parse(request.responseText)
+        
+        callback(null, entries)
+      
+      } else{
+        callback(request.responseText)
+      }
+    })
+    
+    request.setRequestHeader('Content-type', 'application/json');
+
+    request.send(JSON.stringify(params));
+
+
   }
 
   /* Updates the given entry. The entry must have an id attribute that
@@ -50,7 +73,35 @@
    *  error -- the error that occurred or NULL if no error occurred
    */
   EntryModel.update = (entry, callback) => {
-    // TODO
+    
+    const request = new XMLHttpRequest()
+    
+    const params = entry;
+        
+    const id = entry.id;
+    
+    console.log("id: " + id);
+    
+    request.addEventListener('load', () => {
+      console.log(request.responseText)
+      if(request.status == STATUS_OK){
+
+        const entries = JSON.parse(request.responseText)
+        
+        callback(null, entries)
+      
+      } else{
+        callback(request.responseText)
+      }
+    })
+    
+    request.open('POST', '/entries/' + id);
+
+    
+    request.setRequestHeader('Content-type', 'application/json');
+
+    request.send(JSON.stringify(params));
+    
   }
 
   /* Deletes the entry with the given id.
