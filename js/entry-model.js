@@ -62,8 +62,6 @@
     request.setRequestHeader('Content-type', 'application/json');
 
     request.send(JSON.stringify(params));
-
-
   }
 
   /* Updates the given entry. The entry must have an id attribute that
@@ -124,11 +122,11 @@
       } else{
         callback(request.responseText)
       }
+      
     })
     
     request.open('POST', '/entries/' + id + '/delete')
 
-    
     request.setRequestHeader('Content-type', 'application/json')
 
     request.send(JSON.stringify(id))
